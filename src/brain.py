@@ -11,7 +11,7 @@ collection = client.get_collection("knowledge_base", embedding_function=emb_fn)
 
 # Specialist: Focuses only on facts
 notes_agent = Agent(
-    "google-gla:gemini-2.0-flash",
+    "anthropic:claude-3-5-sonnet-latest",
     system_prompt="You are a Factual Researcher. Provide detailed facts from the search results.",
 )
 
@@ -29,7 +29,7 @@ def search_tool(ctx: RunContext[None], query: str) -> str:
 
 # --- 2. THE MANAGER (Orchestrator Agent) ---
 orchestrator_agent = Agent(
-    "google-gla:gemini-2.0-flash",
+    "anthropic:claude-3-5-sonnet-latest",
     system_prompt=(
         "You are the user's 'Second Brain' AI assistant. "
         "CRITICAL INSTRUCTIONS:\n"
