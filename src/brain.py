@@ -27,15 +27,25 @@ def search_tool(ctx: RunContext[None], query: str) -> str:
     )
 
 
-# Manager: Handles the user and delegates
+# --- 2. THE MANAGER (Orchestrator Agent) ---
 orchestrator_agent = Agent(
     "google-gla:gemini-2.0-flash",
-    system_prompt="You are the Second Brain. Answer from history or use 'consult_researcher' for notes.",
+    system_prompt=(
+        "You are the user's 'Second Brain' AI assistant. "
+        "CRITICAL INSTRUCTIONS:\n"
+        "1. You have a persistent memory of the chat. ALWAYS read the conversation history to answer questions about the user's personal details (e.g., favorite color, name) before doing anything else.\n"
+        "2. DO NOT use tools to answer questions about the user's personal preferences if they are already in the chat history.\n"
+        "3. Only use tools when asked to search external documents, project notes, or files."
+    ),
 )
 
 
 @orchestrator_agent.tool
 async def consult_researcher(ctx: RunContext[None], question: str) -> str:
-    """Ask the specialist researcher to look through your notes."""
+    """
+    Searches the user's external notes and documents (like about-me.md or meeting notes).
+    CRITICAL: DO NOT use this tool for conversational questions, personal preferences, or things the user just told you in the chat history.
+    """
+    print(f"   [Headquarters] Delegating '{question}' to Researcher...")
     result = await notes_agent.run(question)
     return result.output
