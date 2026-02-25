@@ -6,7 +6,7 @@
   + [x] Prep. the contacts
 + [x] Remember the history (persistent memory)
 + [x] Test drive the RAG
-+ [ ] Try ClaudeAI
++ [x] Try ClaudeAI
 + [ ] Evaluations
 + [ ] Telemetry
 + [ ] Q: When I add new content in the `/data`, should I delete the files in `/db` folder and re-ingest the knowledge base?
