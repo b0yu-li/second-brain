@@ -2,6 +2,7 @@ import os
 from pydantic_ai.messages import ModelMessage
 from pydantic import TypeAdapter
 from src.brain import orchestrator_agent
+from src.telemetry import init_telemetry
 
 # Path for persistent chat history
 MEMORY_PATH = "memory/chat_history.json"
@@ -28,8 +29,8 @@ def save_memory(messages):
 
 
 def run_brain():
-    # TODO: - 1. Start Telemetry (Arize Phoenix)
-    # init_telemetry(project_name="second-brain-foundation")
+    # 1. INITIALIZE TELEMETRY FIRST
+    init_telemetry(project_name="second-brain")
 
     print("🧠 Second Brain: Foundation Layer Online")
     print("(Type 'exit' to quit or 'clear' to reset memory)")

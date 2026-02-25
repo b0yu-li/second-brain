@@ -9,6 +9,8 @@
 + [x] Try ClaudeAI
 + [ ] Evaluations
 + [ ] Telemetry
+  + [x] PoC
+  + [ ] Trace Status: UNSET
 + [ ] Q: When I add new content in the `/data`, should I delete the files in `/db` folder and re-ingest the knowledge base?
 + [ ] Make a video to showcase it
 + [ ] Blog
@@ -25,4 +27,10 @@ uv run python src/ingest.py
 
 ```shell
 uv run python main.py
+```
+
+### Arize Phoenix Telemetry
+
+```shell
+uvx arize-phoenix serve
 ```

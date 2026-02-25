@@ -6,8 +6,12 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "anthropic>=0.79.0",
+    "arize-phoenix-otel>=0.14.0",
     "chromadb>=1.5.0",
     "google-genai>=1.63.0",
+    "openinference-instrumentation-pydantic-ai>=0.1.12",
+    "opentelemetry-exporter-otlp>=1.39.1",
+    "opentelemetry-sdk>=1.39.1",
     "pydantic-ai>=1.59.0",
     "sentence-transformers>=5.2.2",
 ]
