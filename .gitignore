@@ -2,3 +2,6 @@
 .env
 db/*
 !db/.gitkeep
+
+memory/*
+src/__pycache__
