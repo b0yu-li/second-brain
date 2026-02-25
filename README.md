@@ -5,9 +5,12 @@
 + [x] Ingest Contacts
   + [x] Prep. the contacts
 + [x] Remember the history (persistent memory)
-+ [ ] Test drive the RAG
++ [x] Test drive the RAG
 + [ ] Evaluations
++ [ ] Telemetry
 + [ ] Q: When I add new content in the `/data`, should I delete the files in `/db` folder and re-ingest the knowledge base?
++ [ ] Make a video to showcase it
++ [ ] Blog
 
 ## Commands to Interact
 
