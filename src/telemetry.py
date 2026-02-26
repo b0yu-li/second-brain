@@ -1,4 +1,3 @@
-# src/telemetry.py
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
@@ -22,13 +21,15 @@ def init_telemetry(project_name: str = "second-brain-blog"):
     tracer_provider = TracerProvider(resource=resource)
     trace.set_tracer_provider(tracer_provider)
 
-    # 3. Add the Exporter (Sends data to Phoenix)
+    # 3. Add the OpenInference Processor FIRST so it enriches spans
+    #    (sets span kinds, LLM attributes, status codes, etc.)
+    #    BEFORE they are handed off to the exporter.
+    tracer_provider.add_span_processor(OpenInferenceSpanProcessor())
+
+    # 4. Add the Exporter SECOND (sends already-enriched spans to Phoenix)
     tracer_provider.add_span_processor(
         SimpleSpanProcessor(OTLPSpanExporter(endpoint=endpoint))
     )
-
-    # 4. Add the Pydantic AI Processor (Formats the prompts/responses beautifully)
-    tracer_provider.add_span_processor(OpenInferenceSpanProcessor())
 
     # 5. The Magic Line: Auto-instrument all Pydantic AI agents
     Agent.instrument_all()

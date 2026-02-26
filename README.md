@@ -8,9 +8,9 @@
 + [x] Test drive the RAG
 + [x] Try ClaudeAI
 + [ ] Evaluations
-+ [ ] Telemetry
++ [x] Telemetry
   + [x] PoC
-  + [ ] Trace Status: UNSET
+  + [x] Trace Status: UNSET, `add_span_processor` order
 + [ ] Q: When I add new content in the `/data`, should I delete the files in `/db` folder and re-ingest the knowledge base?
 + [ ] Make a video to showcase it
 + [ ] Blog
