@@ -15,6 +15,11 @@
 + [ ] Make a video to showcase it
 + [ ] Blog
 
+## Demo Structure
++ Can remember the history
++ Evaluations
++ Telemetry
+
 ## Commands to Interact
 
 + Ingest the data:
