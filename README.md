@@ -7,7 +7,9 @@
 + [x] Remember the history (persistent memory)
 + [x] Test drive the RAG
 + [x] Try ClaudeAI
-+ [ ] Evaluations
++ [x] Evaluations
+  + [ ] Basic Evaluations
+  + [ ] Test if can remember the history (if chat history persisted)
 + [x] Telemetry
   + [x] PoC
   + [x] Trace Status: UNSET, `add_span_processor` order
@@ -32,6 +34,12 @@ uv run python src/ingest.py
 
 ```shell
 uv run python main.py
+```
+
+### Evaluations
+
+```shell
+uv run python -m src.eval
 ```
 
 ### Arize Phoenix Telemetry

@@ -13,5 +13,6 @@ dependencies = [
     "opentelemetry-exporter-otlp>=1.39.1",
     "opentelemetry-sdk>=1.39.1",
     "pydantic-ai>=1.59.0",
+    "pydantic-evals>=1.59.0",
     "sentence-transformers>=5.2.2",
 ]
