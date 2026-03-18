@@ -8,12 +8,13 @@
 + [x] Test drive the RAG
 + [x] Try ClaudeAI
 + [x] Evaluations
-  + [ ] Basic Evaluations
+  + [x] Basic Evaluations
   + [ ] Test if can remember the history (if chat history persisted)
 + [x] Telemetry
   + [x] PoC
   + [x] Trace Status: UNSET, `add_span_processor` order
 + [ ] Q: When I add new content in the `/data`, should I delete the files in `/db` folder and re-ingest the knowledge base?
++ [ ] Inflate README.md
 + [ ] Make a video to showcase it
 + [ ] Blog
 
