@@ -12,6 +12,7 @@ Second Brain is an intelligent chatbot that acts as your personal knowledge comp
 - **Automated Evaluations** - Built-in test suite with LLM-as-judge and custom evaluators for both retrieval accuracy and memory persistence
 - **Full Observability** - OpenTelemetry integration with Arize Phoenix for real-time trace visualization and performance monitoring
 - **Local Embeddings** - Uses Sentence Transformers for on-device vectorization with no API costs
+- **Visual Web UI** - Chainlit-based interface showing multi-agent coordination and thinking steps in real-time
 
 ## Tech Stack
 
@@ -31,6 +32,9 @@ Second Brain is an intelligent chatbot that acts as your personal knowledge comp
 
 ### Testing
 - **Pydantic Evals** - Evaluation framework with LLM-as-judge and custom evaluators
+
+### Interface
+- **Chainlit** - Web-based chat UI with step visualization for multi-agent coordination
 
 ## Architecture
 
@@ -130,7 +134,7 @@ The chatbot maintains persistent memory across sessions. Your chat history is sa
 Launch the Chainlit web interface for a visual demo experience:
 
 ```bash
-chainlit run chainlit_app.py -w
+uv run chainlit run chainlit_app.py -w
 ```
 
 Then visit `http://localhost:8000` to interact with your second brain through a visual interface that shows:
