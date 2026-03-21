@@ -46,6 +46,16 @@ async def consult_researcher(ctx: RunContext[None], question: str) -> str:
     Searches the user's external notes and documents (like about-me.md or meeting notes).
     CRITICAL: DO NOT use this tool for conversational questions, personal preferences, or things the user just told you in the chat history.
     """
-    print(f"   [Headquarters] Delegating '{question}' to Researcher...")
-    result = await notes_agent.run(question)
-    return result.output
+    # Try to show researcher step in Chainlit UI (falls back gracefully if not in Chainlit)
+    try:
+        import chainlit as cl
+        async with cl.Step(name="Researcher Agent", type="tool") as step:
+            step.input = question
+            result = await notes_agent.run(question)
+            step.output = result.output
+            return result.output
+    except:
+        # Fallback for CLI mode
+        print(f"   [Headquarters] Delegating '{question}' to Researcher...")
+        result = await notes_agent.run(question)
+        return result.output

@@ -1,7 +1,22 @@
+# macOS
 .DS_Store
+
+# Environment
 .env
+
+# Database
 db/*
 !db/.gitkeep
 
+# Memory
 memory/*
-src/__pycache__
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Chainlit
+.chainlit

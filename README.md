@@ -125,6 +125,22 @@ uv run python main.py
 
 The chatbot maintains persistent memory across sessions. Your chat history is saved to `memory/chat_history.json`.
 
+### Web UI
+
+Launch the Chainlit web interface for a visual demo experience:
+
+```bash
+chainlit run chainlit_app.py -w
+```
+
+Then visit `http://localhost:8000` to interact with your second brain through a visual interface that shows:
+- **Multi-Agent Coordination** - See when the orchestrator delegates to the researcher agent in real-time
+- **Agent Thinking Steps** - Collapsible steps showing the decision-making process
+- **Persistent Memory** - Visual indication of when answers come from conversation history vs. knowledge base search
+- **Knowledge Base Info** - See which files are loaded in your knowledge base
+
+Perfect for demonstrations and understanding how the multi-agent system works under the hood!
+
 ### Knowledge Base Ingestion
 
 Add or update documents in your knowledge base:
@@ -176,7 +192,7 @@ Project roadmap and completed milestones:
   + [x] Basic Evaluations
   + [x] Test if can remember the history (if chat history persisted)
 + [x] Incremental Notes
-+ [ ] Add an UI
++ [x] Add an UI
 + [x] Telemetry
   + [x] PoC
   + [x] Trace Status: UNSET, `add_span_processor` order
