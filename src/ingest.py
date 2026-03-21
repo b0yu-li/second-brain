@@ -41,6 +41,10 @@ def run_ingestion():
                 )
                 continue
 
+            # Delete old chunks from this file to enable incremental updates
+            print(f"🗑️  Removing old chunks from {filename}...")
+            collection.delete(where={"source": filename})
+
             print(f"🧱 Adding {len(chunks)} chunks to database...")
             collection.add(
                 documents=chunks,

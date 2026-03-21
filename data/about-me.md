@@ -4,6 +4,7 @@ I am Boyu, I like creating stuff (whether it be code or music thingy).
 
 ## Recent Updates
 
++ **Mar 17, 2026:** Successfully implemented incremental ingestion for the second brain project. Now I can update my knowledge base without deleting everything!
 + **Feb 14, 2026:** Been working on this second brain project, it's about AI engineering.
 + **Feb 10, 2026:** I beat _Raging Conchfly_ in _Hollow Knight: Silksong_ on my 33rd attempt.
 + **Jan 14, 2026:** I beat _The Unravelled_ in _Hollow Knight: Silksong_ on my 29th attempt.

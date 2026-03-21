@@ -10,7 +10,7 @@
 + [x] Evaluations
   + [x] Basic Evaluations
   + [x] Test if can remember the history (if chat history persisted)
-+ [ ] Incremental Notes
++ [x] Incremental Notes
 + [ ] Add an UI
 + [x] Telemetry
   + [x] PoC
@@ -32,6 +32,8 @@
 ```shell
 uv run python src/ingest.py
 ```
+
+The ingestion script supports **incremental updates** — you can add or modify files in `/data` and re-run the script without deleting the `/db` folder. It will automatically replace old chunks with new ones.
 
 + Ask the second brain
 
