@@ -9,12 +9,14 @@
 + [x] Try ClaudeAI
 + [x] Evaluations
   + [x] Basic Evaluations
-  + [ ] Test if can remember the history (if chat history persisted)
+  + [x] Test if can remember the history (if chat history persisted)
++ [ ] Incremental Notes
++ [ ] Add an UI
 + [x] Telemetry
   + [x] PoC
   + [x] Trace Status: UNSET, `add_span_processor` order
-+ [ ] Q: When I add new content in the `/data`, should I delete the files in `/db` folder and re-ingest the knowledge base?
-+ [ ] Inflate README.md
++ [x] ~~Q: When I add new content in the `/data`, should I delete the files in `/db` folder and re-ingest the knowledge base?~~ Obsolete
++ [ ] Inflate README.md, remember to include the tech stack
 + [ ] Make a video to showcase it
 + [ ] Blog
 

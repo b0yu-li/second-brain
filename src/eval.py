@@ -1,11 +1,18 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
+from pydantic import BaseModel
+from pydantic_ai.messages import ToolCallPart
 from pydantic_evals import Case, Dataset
 from pydantic_evals.evaluators import Evaluator, EvaluatorContext, LLMJudge
 
 from src.brain import orchestrator_agent
 
 JUDGE_MODEL = "anthropic:claude-sonnet-4-6"
+
+
+# ---------------------------------------------------------------------------
+# Shared evaluators
+# ---------------------------------------------------------------------------
 
 
 @dataclass
@@ -19,9 +26,61 @@ class ContainsAny(Evaluator[str, str, None]):
         return any(kw.lower() in output_lower for kw in self.keywords)
 
 
+# ---------------------------------------------------------------------------
+# RAG retrieval task
+# ---------------------------------------------------------------------------
+
+
 async def ask_brain(question: str) -> str:
     result = await orchestrator_agent.run(question)
     return result.output
+
+
+# ---------------------------------------------------------------------------
+# Memory (multi-turn) task
+# ---------------------------------------------------------------------------
+
+
+class MemoryInput(BaseModel):
+    setup: str
+    question: str
+
+
+class MemoryOutput(BaseModel):
+    answer: str
+    used_researcher: bool
+
+
+async def ask_brain_with_memory(inputs: MemoryInput) -> MemoryOutput:
+    first_result = await orchestrator_agent.run(inputs.setup)
+    second_result = await orchestrator_agent.run(
+        inputs.question, message_history=first_result.all_messages()
+    )
+    used_researcher = any(
+        isinstance(part, ToolCallPart)
+        and part.tool_name == "consult_researcher"
+        for msg in second_result.new_messages()
+        for part in msg.parts
+    )
+    return MemoryOutput(answer=second_result.output, used_researcher=used_researcher)
+
+
+@dataclass
+class MemoryContainsAny(Evaluator[MemoryInput, MemoryOutput, None]):
+    """Asserts the answer contains at least one expected keyword."""
+
+    keywords: list[str]
+
+    def evaluate(self, ctx: EvaluatorContext[MemoryInput, MemoryOutput, None]) -> bool:
+        return any(kw.lower() in ctx.output.answer.lower() for kw in self.keywords)
+
+
+@dataclass
+class DidNotUseResearcher(Evaluator[MemoryInput, MemoryOutput, None]):
+    """Asserts the orchestrator answered from chat history, not by calling the researcher."""
+
+    def evaluate(self, ctx: EvaluatorContext[MemoryInput, MemoryOutput, None]) -> bool:
+        return not ctx.output.used_researcher
 
 
 dataset = Dataset(
@@ -91,6 +150,56 @@ dataset = Dataset(
 )
 
 
+memory_dataset = Dataset[MemoryInput, MemoryOutput](
+    name="memory-eval",
+    cases=[
+        Case(
+            name="remember_fav_language",
+            inputs=MemoryInput(
+                setup="My favorite programming language is TypeScript.",
+                question="What's my favorite programming language?",
+            ),
+            evaluators=[
+                MemoryContainsAny(keywords=["TypeScript"]),
+                DidNotUseResearcher(),
+            ],
+        ),
+        Case(
+            name="remember_coffee_shop_trip",
+            inputs=MemoryInput(
+                setup="I'm planning a trip to a coffee shop named The Southest Coffee next month.",
+                question="Where am I planning to go?",
+            ),
+            evaluators=[
+                MemoryContainsAny(keywords=["The Southest Coffee"]),
+                DidNotUseResearcher(),
+            ],
+        ),
+        Case(
+            name="remember_pet",
+            inputs=MemoryInput(
+                setup="I just adopted a cat named Guaiguai.",
+                question="What's my cat's name?",
+            ),
+            evaluators=[
+                MemoryContainsAny(keywords=["Guaiguai"]),
+                DidNotUseResearcher(),
+            ],
+        ),
+    ],
+)
+
+
 if __name__ == "__main__":
-    report = dataset.evaluate_sync(ask_brain)
-    report.print(include_reasons=True)
+    print("=" * 60)
+    print("  RAG Retrieval Evaluation")
+    print("=" * 60)
+    rag_report = dataset.evaluate_sync(ask_brain)
+    rag_report.print(include_reasons=True)
+
+    print("\n")
+    print("=" * 60)
+    print("  Chat Memory Evaluation")
+    print("=" * 60)
+    memory_report = memory_dataset.evaluate_sync(ask_brain_with_memory)
+    memory_report.print(include_reasons=True)
